@@ -1,6 +1,11 @@
 # AutoClick
-基于python的自动点击
+基于pyautogui的自动点击
 
-截图放到start.py目录下取名button.png,运行start.py会自动在屏幕查找button.png相似的图片点击
+#使用教程
+1. 安装[python3](https://www.python.org/downloads/)
+2. 安装pyqt5和pyautogui: `pip install PyQt5 pyautogui`
+3. 运行`python start.py`
 
-有需求请自行更改start.py的内容
+#注意事项
+1. 请不要在使用过程中移动鼠标
+2. 如果运行后没有动静请把start.py中`x, y = pag.locateCenterOnScreen(option,region=(616, 325, 1250, 810),grayscale=True,confidence=0.9)`的region参数删除.
