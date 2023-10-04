@@ -1,7 +1,10 @@
 from time import sleep
 import pyautogui as pag
 import random
+import os
+
 pag.FAILSAFE = False
+
 # 定义一个函数，用于检测是否出现了正确的提示
 def check_correct():
     # 尝试在屏幕上找到correct.png图片的位置
@@ -49,11 +52,38 @@ def click_close():
         # 打印错误信息，并继续执行
         print('Close button not found')
 
+# 定义一个函数，用于点击后面的题目
+def click_next(int):#传入循环次数
+    # 尝试在屏幕上找到循环次数.png图片的位置
+    try:
+        x, y = pag.locateCenterOnScreen(str(int)+'.png')
+        # 如果找到了，移动鼠标到该位置，并点击一次
+        pag.moveTo(x, y)
+        pag.click()
+
+        return True
+    # 如果没有找到，抛出异常
+    except TypeError:
+        # 打印错误信息，并继续执行
+        print('Next button not found')
+        return False
+    except OSError:
+        # 打印错误信息，并继续执行
+        print('Failed to read ' + str(int) + '.png because file is missing, has improper permissions, or is an unsupported or invalid format')
+        return False
+
+
 # 定义一个循环，用于不断重复以下步骤：
+i = 1
 while True:
     # 调用检测正确提示的函数，如果找到了，就调用点击关闭按钮的函数，并结束循环
     if check_correct():
-        click_close()
+        i += 1
+        #检查有没有下一题
+        if click_next(i):
+            continue
+        else:
+            click_close()
     # 如果没有找到正确提示，就调用随机点击选项的函数
     else:
         click_option()
