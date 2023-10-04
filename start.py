@@ -84,6 +84,7 @@ while True:
             continue
         else:
             click_close()
+            i = 1
     # 如果没有找到正确提示，就调用随机点击选项的函数
     else:
         click_option()
