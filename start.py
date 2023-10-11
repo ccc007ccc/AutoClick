@@ -1,4 +1,3 @@
-import ctypes
 from ctypes import wintypes
 from time import sleep
 import pyautogui as pag
@@ -123,7 +122,7 @@ def click_nextV():
             if check_progress():
                 if check_nextV():
                     pag.click()
-                    sleep(5)
+                    sleep(7)
                     pag.moveTo(460, 540)
                     pag.click()
                     pag.moveTo(0, 0)
