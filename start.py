@@ -1,3 +1,5 @@
+import ctypes
+from ctypes import wintypes
 from time import sleep
 import pyautogui as pag
 import random
@@ -19,6 +21,18 @@ def check_multiple():
         # 返回False
         return False
 
+#j检测音频是否在播放
+def check_audio():
+    # 尝试在屏幕上找到音频播放的图片位置
+    try:
+        x, y = pag.locateCenterOnScreen("audio.png", confidence=0.96)
+        pag.moveTo(x, y)
+        # 如果找到了，返回True
+        return True
+    # 如果没有找到，抛出异常
+    except TypeError:
+        # 返回False
+        return False
 
 # 定义一个函数，用于检测是否出现了正确的提示
 def check_correct():
@@ -104,19 +118,20 @@ def check_end():
 #移动鼠标->检查视频进度条->点击下个视频按钮
 def click_nextV():
     if check_end():
-        move_mouseV()
-        if check_progress():
-            if check_nextV():
-                pag.click()
-                sleep(4)
-                pag.moveTo(460, 540)
-                pag.click()
-                pag.moveTo(0, 0)
-                return True
-            else:
-                print("\033[0;33m" + "未找到下个视频按钮" + "\033[0m")
-                pag.moveTo(0, 0)
-                return False
+        if check_audio() != True:
+            move_mouseV()
+            if check_progress():
+                if check_nextV():
+                    pag.click()
+                    sleep(5)
+                    pag.moveTo(460, 540)
+                    pag.click()
+                    pag.moveTo(0, 0)
+                    return True
+                else:
+                    print("\033[0;33m" + "未找到下个视频按钮" + "\033[0m")
+                    pag.moveTo(0, 0)
+                    return False
     else:
         return False
 
@@ -182,7 +197,7 @@ def click_next(int):  # 传入循环次数
         # 打印错误信息，并继续执行
         print("无法读取 " + str(int) + ".png，因为文件丢失、权限不正确或格式不受支持或无效")
         return False
-
+    
 
 
 #是否打开自动播放下个视频
@@ -195,6 +210,9 @@ else:
 def continue_run():
     # 定义一个循环，用于不断重复以下步骤：
     i = 1
+
+    #是否在答题中?
+    isAnswer = False
 
     # 单选图片为x.png，多选图片为x_D.png，多选选中为x_DV.png
     # 定义一个列表，存储所有选项的图片名
@@ -236,6 +254,7 @@ def continue_run():
                 continue
             else:
                 click_close()
+                isAnswer = False
                 i = 1
         # 如果没有找到正确提示，就调用随机点击选项的函数
         else:
@@ -246,6 +265,7 @@ def continue_run():
             option = random.choice(options)        
             print(option)
             if click_option(option, 0.9):
+                isAnswer = True
                 # 检测错误提示
                 if check_error():
                     if check_multiple():
@@ -272,8 +292,9 @@ def continue_run():
                     correctOptions.append(letter + '_DV.png')
         #检查是否打开自动播放下个视频
         if autoNextV:
-            sleep(0.5)
-            if autoNextV:
+            print(isAnswer)
+            if isAnswer != True:
+                sleep(0.5)
                 click_nextV()
         else:
             print("\033[0;33m" + "未打开自动播放下个视频" + "\033[0m")
