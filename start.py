@@ -108,6 +108,9 @@ def click_nextV():
         if check_progress():
             if check_nextV():
                 pag.click()
+                sleep(4)
+                pag.moveTo(460, 540)
+                pag.click()
                 pag.moveTo(0, 0)
                 return True
             else:
