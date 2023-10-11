@@ -220,13 +220,8 @@ def continue_run():
     # 定义一个列表，存储所有错误提示的图片名
     errorOptions = []
     correctOptions = []
-    while True:
-        #检查是否打开自动播放下个视频
-        if autoNextV:
-            click_nextV()
-        else:
-            print("\033[0;33m" + "未打开自动播放下个视频" + "\033[0m")
         #检查是否是多选题
+    while True:
         if check_multiple():
             options = multipleOptions
         else:
@@ -275,7 +270,13 @@ def continue_run():
                     correctOptions.append(letter + '.png')
                     correctOptions.append(letter + '_D.png')
                     correctOptions.append(letter + '_DV.png')
-    
+        #检查是否打开自动播放下个视频
+        if autoNextV:
+            sleep(0.5)
+            if autoNextV:
+                click_nextV()
+        else:
+            print("\033[0;33m" + "未打开自动播放下个视频" + "\033[0m")
 
 
 

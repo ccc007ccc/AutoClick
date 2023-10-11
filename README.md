@@ -5,7 +5,7 @@
 ## 使用教程
 
 1. 安装 [Python 3](https://www.python.org/downloads/)
-2. 安装 PyQt5 和 pyautogui：`pip install PyQt5 pyautogui opencv-python`
+2. 安装 PyQt5 和 pyautogui：`pip install PyQt5 pyautogui opencv-python keyboard`
 3. 运行 `python start.py`
 
 ## 注意事项
